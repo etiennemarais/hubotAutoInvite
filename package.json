@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/etiennemarais/jarvisAutoInvite#readme",
   "dependencies": {
+    "lodash": "^3.10.1",
     "request": "^2.64.0"
   }
 }

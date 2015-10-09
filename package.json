@@ -1,0 +1,29 @@
+{
+  "name": "jarvisautoinvite",
+  "version": "0.0.1",
+  "description": "A small node task to auto invite Jarvis(hubot) to all the channels in a specified config file.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://etiennemarais@github.com/etiennemarais/jarvisAutoInvite.git"
+  },
+  "keywords": [
+    "hubot",
+    "node",
+    "npm",
+    "autoinvite",
+    "slack"
+  ],
+  "author": "Etienne Marais",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etiennemarais/jarvisAutoInvite/issues"
+  },
+  "homepage": "https://github.com/etiennemarais/jarvisAutoInvite#readme",
+  "dependencies": {
+    "request": "^2.64.0"
+  }
+}

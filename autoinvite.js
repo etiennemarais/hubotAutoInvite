@@ -18,12 +18,14 @@ var _ = require('lodash');
         var data = JSON.parse(responseBody);
         var _self = this;
 
+        // TODO add error reporting for bad auth etc.
+
         // Loop over the channels and see if jarvis is invited to that channel
         _.forEach(data.channels, function(item) {
             var channelId = (isBotAMemberOfChannel(item, _self.slack.botId)) ? item.id : '';
 
             // Auto invite Jarvis to the channel
-            // https://slack.com/api/channels.invite?token=MY_TOKEN&channel=<channelID>&user=<jarvisId>
+            // TODO https://slack.com/api/channels.invite?token=MY_TOKEN&channel=<channelID>&user=<jarvisId>
             console.log(channelId);
         });
     };

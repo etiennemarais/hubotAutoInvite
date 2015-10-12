@@ -9,12 +9,28 @@ var _ = require('lodash');
     };
 
     Invite.prototype.run = function() {
-        var options = {
-            url: this.config.slack.url + '/channels.list?token=' + this.config.slack.token
+        var botUserInfo = {
+            url: this.config.slack.url + '/users.info?user=' + this.config.slack.botId + '&token=' + this.config.slack.token
         };
 
-        // Get the available channels using the slack token
-        this.req(options, processChannels.bind(this));
+        // Get the bot user details
+        this.req(botUserInfo, function(error, response, responseBody) {
+            var data = JSON.parse(responseBody);
+            if (data.ok === false) {
+                try {
+                    this.handleError.display(data.error);
+                } catch (e) {
+                    console.log(e.message);
+                    throw '';
+                }
+            }
+
+            var options = {
+                url: this.config.slack.url + '/channels.list?token=' + this.config.slack.token
+            };
+            // Get the available channels using the slack token
+            this.req(options, processChannels.bind(this));
+        }.bind(this));
     };
 
     var processChannels = function(error, response, responseBody) {
@@ -26,10 +42,9 @@ var _ = require('lodash');
                 this.handleError.display(data.error);
             } catch (e) {
                 console.log(e.message);
+                throw '';
             }
         }
-
-        // TODO Try and find the bot from the user ID
 
         // Loop over the channels and see if jarvis is invited to that channel
         _.forEach(data.channels, function(item) {

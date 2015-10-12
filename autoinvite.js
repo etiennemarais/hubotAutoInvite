@@ -2,9 +2,10 @@
 var _ = require('lodash');
 
 (function(_) {
-    var Invite = function(config, req) {
+    var Invite = function(config, req, handleError) {
         this.config = config;
         this.req = req;
+        this.handleError = handleError;
     };
 
     Invite.prototype.run = function() {
@@ -21,9 +22,14 @@ var _ = require('lodash');
         var _self = this;
 
         if (data.ok === false) {
-            console.log("Error: " + data.error);
-            return;
+            try {
+                this.handleError.display(data.error);
+            } catch (e) {
+                console.log(e.message);
+            }
         }
+
+        // TODO Try and find the bot from the user ID
 
         // Loop over the channels and see if jarvis is invited to that channel
         _.forEach(data.channels, function(item) {
@@ -42,6 +48,7 @@ var _ = require('lodash');
 
     var request = require('request');
     var common = require('./common.js');
+    var handleError = require('./handleError.js');
     var config = common.config();
-    module.exports = new Invite(config, request);
+    module.exports = new Invite(config, request, handleError);
 })(_);
